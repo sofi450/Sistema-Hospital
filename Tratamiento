@@ -1,30 +1,79 @@
 package ejercicio1;
 
+/**
+ * Representa un tratamiento médico asignado a un paciente.
+ * Puede ser Quimioterapia, Radioterapia, Cirugía o Inmunoterapia.
+ */
 public class Tratamiento {
     private String idTratamiento;
     private String nombre;
-    private int duracionDias;
+    private int    duracionDias;
     private String efectosSecundarios;
 
-    public Tratamiento(String idTratamiento, String nombre, int duracionDias, String efectosSecundarios) {
-        this.idTratamiento = idTratamiento;
-        this.nombre = nombre;
-        this.duracionDias = duracionDias;
+    /**
+     * Crea un nuevo tratamiento con todos sus datos.
+     * @param idTratamiento      Identificador único del tratamiento
+     * @param nombre             Nombre del tratamiento (ej: Quimioterapia)
+     * @param duracionDias       Duración estimada en días
+     * @param efectosSecundarios Descripción de los efectos secundarios conocidos
+     */
+    public Tratamiento(String idTratamiento, String nombre,
+                       int duracionDias, String efectosSecundarios) {
+        this.idTratamiento      = idTratamiento;
+        this.nombre             = nombre;
+        this.duracionDias       = duracionDias;
         this.efectosSecundarios = efectosSecundarios;
     }
 
+    /**
+     * Calcula el porcentaje estimado de eficacia del tratamiento
+     * según el tipo de cáncer del paciente.
+     *
+     * Lógica:
+     *  - Leucemia  → responde mejor a Quimioterapia e Inmunoterapia (base 70%)
+     *  - Linfoma   → responde bien a Radioterapia (base 65%)
+     *  - Sarcoma   → responde mejor a Cirugía (base 60%)
+     *
+     * Se suman puntos extra si el nombre del tratamiento coincide
+     * con el tipo de cáncer que mejor responde a él:
+     *  - Leucemia  + Quimioterapia  → +15%
+     *  - Leucemia  + Inmunoterapia  → +10%
+     *  - Linfoma   + Radioterapia   → +15%
+     *  - Sarcoma   + Cirugía        → +20%
+     *
+     * @param tipoCancer Tipo de cáncer del paciente (Sarcoma, Leucemia, Linfoma)
+     * @return Porcentaje estimado de mejora (0.0 - 100.0)
+     */
     public double calcularEficacia(String tipoCancer) {
-        // Eficacia estimada según tipo de cáncer (valores de ejemplo)
+        double base;
+
         switch (tipoCancer.toLowerCase()) {
-            case "leucemia":   return 75.0;
-            case "linfoma":    return 65.0;
-            case "sarcoma":    return 55.0;
-            default:           return 50.0;
+            case "leucemia": base = 70.0; break;
+            case "linfoma":  base = 65.0; break;
+            case "sarcoma":  base = 60.0; break;
+            default:         base = 50.0;
         }
+
+        // Bonus si el tratamiento es el más indicado para ese tipo de cáncer
+        String tipo  = tipoCancer.toLowerCase();
+        String trat  = nombre.toLowerCase();
+
+        if (tipo.equals("leucemia") && trat.equals("quimioterapia")) base += 15;
+        if (tipo.equals("leucemia") && trat.equals("inmunoterapia")) base += 10;
+        if (tipo.equals("linfoma")  && trat.equals("radioterapia"))  base += 15;
+        if (tipo.equals("sarcoma")  && trat.equals("cirugía"))       base += 20;
+
+        // No superar el 100%
+        return Math.min(base, 100.0);
     }
 
-    public String getIdTratamiento()    { return idTratamiento; }
-    public String getNombre()           { return nombre; }
-    public int    getDuracionDias()     { return duracionDias; }
+    public String getIdTratamiento()      { return idTratamiento; }
+    public String getNombre()             { return nombre; }
+    public int    getDuracionDias()       { return duracionDias; }
     public String getEfectosSecundarios() { return efectosSecundarios; }
+
+    @Override
+    public String toString() {
+        return "[" + idTratamiento + "] " + nombre + " - " + duracionDias + " días";
+    }
 }
