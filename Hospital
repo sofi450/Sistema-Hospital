@@ -1,0 +1,98 @@
+package ejercicio1;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Hospital {
+    private String nombre;
+    private List<Paciente> pacientes;
+
+    public Hospital(String nombre) {
+        this.nombre = nombre;
+        this.pacientes = new ArrayList<>();
+    }
+
+    public void registrarPaciente(Paciente p) {
+        pacientes.add(p);
+    }
+
+    public void pacientesPorTipoCancer() {
+        int sarcoma = 0, leucemia = 0, linfoma = 0;
+        for (Paciente p : pacientes) {
+            switch (p.getTipoCancer().toLowerCase()) {
+                case "sarcoma":  sarcoma++;  break;
+                case "leucemia": leucemia++; break;
+                case "linfoma":  linfoma++;  break;
+            }
+        }
+        System.out.println("\n=== Pacientes por tipo de cáncer ===");
+        System.out.println("Sarcoma:  " + sarcoma);
+        System.out.println("Leucemia: " + leucemia);
+        System.out.println("Linfoma:  " + linfoma);
+    }
+
+    public void porcentajePorEstado() {
+        int enTratamiento = 0, enRemision = 0, fallecido = 0;
+        int total = pacientes.size();
+        for (Paciente p : pacientes) {
+            switch (p.getEstadoActual().toLowerCase()) {
+                case "en tratamiento": enTratamiento++; break;
+                case "en remisión":    enRemision++;    break;
+                case "fallecido":      fallecido++;     break;
+            }
+        }
+        System.out.println("\n=== Porcentaje de pacientes por estado ===");
+        System.out.printf("En tratamiento: %.1f%%%n", (enTratamiento * 100.0) / total);
+        System.out.printf("En remisión:    %.1f%%%n", (enRemision    * 100.0) / total);
+        System.out.printf("Fallecido:      %.1f%%%n", (fallecido     * 100.0) / total);
+    }
+
+    public static void main(String[] args) {
+        Hospital hospital = new Hospital("Hospital Universitario");
+
+        // --- 6 pacientes con diferente tipo de cáncer ---
+        Paciente p1 = new Paciente("P001", "Ana Gómez",    45, "F", "Leucemia", "II",  "En tratamiento");
+        Paciente p2 = new Paciente("P002", "Carlos Ruiz",  60, "M", "Sarcoma",  "III", "Fallecido");
+        Paciente p3 = new Paciente("P003", "María Torres", 38, "F", "Linfoma",  "I",   "En remisión");
+        Paciente p4 = new Paciente("P004", "Luis Pérez",   52, "M", "Leucemia", "IV",  "En tratamiento");
+        Paciente p5 = new Paciente("P005", "Sofía Díaz",   29, "F", "Sarcoma",  "II",  "En remisión");
+        Paciente p6 = new Paciente("P006", "Jorge López",  70, "M", "Linfoma",  "III", "Fallecido");
+
+        hospital.registrarPaciente(p1);
+        hospital.registrarPaciente(p2);
+        hospital.registrarPaciente(p3);
+        hospital.registrarPaciente(p4);
+        hospital.registrarPaciente(p5);
+        hospital.registrarPaciente(p6);
+
+        // --- 2 exámenes a 3 pacientes (p1, p2, p3) ---
+        p1.agregarExamen(new Examen("E001", "2024-01-10", "Biopsia",     "Células malignas detectadas"));
+        p1.agregarExamen(new Examen("E002", "2024-02-15", "Tomografía",  "Masa reducida un 20%"));
+
+        p2.agregarExamen(new Examen("E003", "2024-01-05", "Resonancia",  "Tumor en tejido blando"));
+        p2.agregarExamen(new Examen("E004", "2024-03-20", "Biopsia",     "Metástasis confirmada"));
+
+        p3.agregarExamen(new Examen("E005", "2024-02-01", "Tomografía",  "Sin evidencia de enfermedad"));
+        p3.agregarExamen(new Examen("E006", "2024-04-10", "Resonancia",  "Ganglios normales"));
+
+        // --- 2 tratamientos a 3 pacientes (p4, p5, p6) ---
+        p4.agregarTratamiento(new Tratamiento("T001", "Quimioterapia", 180, "Náuseas, fatiga"));
+        p4.agregarTratamiento(new Tratamiento("T002", "Inmunoterapia",  90, "Fiebre leve"));
+
+        p5.agregarTratamiento(new Tratamiento("T003", "Radioterapia",   45, "Irritación en piel"));
+        p5.agregarTratamiento(new Tratamiento("T004", "Cirugía",         7, "Dolor postoperatorio"));
+
+        p6.agregarTratamiento(new Tratamiento("T005", "Quimioterapia", 120, "Pérdida de cabello"));
+        p6.agregarTratamiento(new Tratamiento("T006", "Radioterapia",   60, "Cansancio extremo"));
+
+        // --- Estadísticas ---
+        hospital.pacientesPorTipoCancer();
+        hospital.porcentajePorEstado();
+
+        // --- Mostrar eficacia de un tratamiento como ejemplo ---
+        System.out.println("\n=== Ejemplo eficacia de tratamiento ===");
+        Tratamiento t = p4.getTratamientos().get(0);
+        System.out.printf("Tratamiento '%s' para %s → eficacia estimada: %.1f%%%n",
+            t.getNombre(), p4.getTipoCancer(), t.calcularEficacia(p4.getTipoCancer()));
+    }
+}
