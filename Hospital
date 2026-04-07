@@ -92,15 +92,15 @@ public class Hospital {
     // ══════════════════════════════════════════
     public static void main(String[] args) {
 
-        Hospital hospital = new Hospital("Hospital Universitario");
+        Hospital hospital = new Hospital("Hospital Gray Sloan");
 
         // ── 6 pacientes con diferente tipo de cáncer ──
-        Paciente p1 = new Paciente("P001", "Ana Gómez",    45, "F", "Leucemia", "II",  "En tratamiento");
-        Paciente p2 = new Paciente("P002", "Carlos Ruiz",  60, "M", "Sarcoma",  "III", "Fallecido");
-        Paciente p3 = new Paciente("P003", "María Torres", 38, "F", "Linfoma",  "I",   "En remisión");
-        Paciente p4 = new Paciente("P004", "Luis Pérez",   52, "M", "Leucemia", "IV",  "En tratamiento");
-        Paciente p5 = new Paciente("P005", "Sofía Díaz",   29, "F", "Sarcoma",  "II",  "En remisión");
-        Paciente p6 = new Paciente("P006", "Jorge López",  70, "M", "Linfoma",  "III", "Fallecido");
+        Paciente p1 = new Paciente("P001", "Karen Diaz",    45, "F", "Leucemia", "II",  "En tratamiento");
+        Paciente p2 = new Paciente("P002", "Santiago Garcia",  60, "M", "Sarcoma",  "III", "Fallecido");
+        Paciente p3 = new Paciente("P003", "Sofia Benites", 38, "F", "Linfoma",  "I",   "En remisión");
+        Paciente p4 = new Paciente("P004", "Kevin Barragan",   52, "M", "Leucemia", "IV",  "En tratamiento");
+        Paciente p5 = new Paciente("P005", "Rachel Bonilla",   29, "F", "Sarcoma",  "II",  "En remisión");
+        Paciente p6 = new Paciente("P006", "Jorge Ramirez",  70, "M", "Linfoma",  "III", "Fallecido");
 
         hospital.registrarPaciente(p1);
         hospital.registrarPaciente(p2);
