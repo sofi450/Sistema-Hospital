@@ -3,42 +3,65 @@ package ejercicio1;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Representa un paciente registrado en el hospital con cáncer.
+ * Mantiene su historial de exámenes y tratamientos recibidos.
+ */
 public class Paciente {
     private String id;
     private String nombre;
-    private int edad;
+    private int    edad;
     private String genero;
-    private String tipoCancer;   // Sarcoma, Leucemia, Linfoma
+    private String tipoCancer;    // Sarcoma, Leucemia o Linfoma
     private String etapa;
-    private String estadoActual; // En tratamiento, En remisión, Fallecido
-    private List<Examen> examenes;
+    private String estadoActual;  // En tratamiento | En remisión | Fallecido
+    private List<Examen>      examenes;
     private List<Tratamiento> tratamientos;
 
+    /**
+     * Crea un paciente con sus datos clínicos básicos.
+     * Las listas de exámenes y tratamientos se inicializan vacías.
+     */
     public Paciente(String id, String nombre, int edad, String genero,
                     String tipoCancer, String etapa, String estadoActual) {
-        this.id = id;
-        this.nombre = nombre;
-        this.edad = edad;
-        this.genero = genero;
-        this.tipoCancer = tipoCancer;
-        this.etapa = etapa;
+        this.id           = id;
+        this.nombre       = nombre;
+        this.edad         = edad;
+        this.genero       = genero;
+        this.tipoCancer   = tipoCancer;
+        this.etapa        = etapa;
         this.estadoActual = estadoActual;
-        this.examenes = new ArrayList<>();
+        this.examenes     = new ArrayList<>();
         this.tratamientos = new ArrayList<>();
     }
 
+    /**
+     * Agrega un examen al historial del paciente.
+     * El examen queda registrado en la lista interna para su posterior consulta.
+     * @param e Examen a agregar (no puede ser null)
+     */
     public void agregarExamen(Examen e) {
         examenes.add(e);
     }
 
+    /**
+     * Agrega un tratamiento al historial del paciente.
+     * Permite llevar el registro de todos los tratamientos recibidos.
+     * @param t Tratamiento a agregar (no puede ser null)
+     */
     public void agregarTratamiento(Tratamiento t) {
         tratamientos.add(t);
     }
 
-    public String getId()             { return id; }
-    public String getNombre()         { return nombre; }
-    public String getTipoCancer()     { return tipoCancer; }
-    public String getEstadoActual()   { return estadoActual; }
-    public List<Examen> getExamenes() { return examenes; }
-    public List<Tratamiento> getTratamientos() { return tratamientos; }
+    public String getId()                        { return id; }
+    public String getNombre()                    { return nombre; }
+    public String getTipoCancer()                { return tipoCancer; }
+    public String getEstadoActual()              { return estadoActual; }
+    public List<Examen>      getExamenes()       { return examenes; }
+    public List<Tratamiento> getTratamientos()   { return tratamientos; }
+
+    @Override
+    public String toString() {
+        return "[" + id + "] " + nombre + " | " + tipoCancer + " | " + estadoActual;
+    }
 }
