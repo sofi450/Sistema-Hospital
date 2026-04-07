@@ -1,0 +1,44 @@
+package ejercicio1;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Paciente {
+    private String id;
+    private String nombre;
+    private int edad;
+    private String genero;
+    private String tipoCancer;   // Sarcoma, Leucemia, Linfoma
+    private String etapa;
+    private String estadoActual; // En tratamiento, En remisión, Fallecido
+    private List<Examen> examenes;
+    private List<Tratamiento> tratamientos;
+
+    public Paciente(String id, String nombre, int edad, String genero,
+                    String tipoCancer, String etapa, String estadoActual) {
+        this.id = id;
+        this.nombre = nombre;
+        this.edad = edad;
+        this.genero = genero;
+        this.tipoCancer = tipoCancer;
+        this.etapa = etapa;
+        this.estadoActual = estadoActual;
+        this.examenes = new ArrayList<>();
+        this.tratamientos = new ArrayList<>();
+    }
+
+    public void agregarExamen(Examen e) {
+        examenes.add(e);
+    }
+
+    public void agregarTratamiento(Tratamiento t) {
+        tratamientos.add(t);
+    }
+
+    public String getId()             { return id; }
+    public String getNombre()         { return nombre; }
+    public String getTipoCancer()     { return tipoCancer; }
+    public String getEstadoActual()   { return estadoActual; }
+    public List<Examen> getExamenes() { return examenes; }
+    public List<Tratamiento> getTratamientos() { return tratamientos; }
+}
