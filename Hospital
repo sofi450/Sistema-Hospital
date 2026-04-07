@@ -3,19 +3,53 @@ package ejercicio1;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase principal del sistema hospitalario.
+ * Gestiona el registro de pacientes y genera estadísticas clínicas.
+ */
 public class Hospital {
-    private String nombre;
+    private String         nombre;
     private List<Paciente> pacientes;
 
+    /**
+     * Crea el hospital con su nombre y una lista de pacientes vacía.
+     * @param nombre Nombre del hospital universitario
+     */
     public Hospital(String nombre) {
-        this.nombre = nombre;
+        this.nombre    = nombre;
         this.pacientes = new ArrayList<>();
     }
 
+    /**
+     * Registra un nuevo paciente en el sistema del hospital.
+     * El paciente queda disponible para búsquedas y estadísticas.
+     * @param p Paciente a registrar
+     */
     public void registrarPaciente(Paciente p) {
         pacientes.add(p);
+        System.out.println("Paciente registrado: " + p.getNombre());
     }
 
+    /**
+     * Busca un paciente en la lista por su identificador único.
+     * Recorre la lista completa comparando el id de cada paciente.
+     * @param id Identificador del paciente a buscar
+     * @return El objeto Paciente si se encuentra, o null si no existe
+     */
+    public Paciente buscarPaciente(String id) {
+        for (Paciente p : pacientes) {
+            if (p.getId().equals(id)) {
+                return p;
+            }
+        }
+        System.out.println("Paciente con id '" + id + "' no encontrado.");
+        return null;
+    }
+
+    /**
+     * Muestra en consola cuántos pacientes hay registrados por cada tipo de cáncer.
+     * Recorre la lista contando por Sarcoma, Leucemia y Linfoma.
+     */
     public void pacientesPorTipoCancer() {
         int sarcoma = 0, leucemia = 0, linfoma = 0;
         for (Paciente p : pacientes) {
@@ -29,8 +63,14 @@ public class Hospital {
         System.out.println("Sarcoma:  " + sarcoma);
         System.out.println("Leucemia: " + leucemia);
         System.out.println("Linfoma:  " + linfoma);
+        System.out.println("Total:    " + pacientes.size());
     }
 
+    /**
+     * Calcula y muestra el porcentaje de pacientes en cada estado actual.
+     * Los estados posibles son: En tratamiento, En remisión y Fallecido.
+     * El porcentaje se calcula como (cantidad / total) * 100.
+     */
     public void porcentajePorEstado() {
         int enTratamiento = 0, enRemision = 0, fallecido = 0;
         int total = pacientes.size();
@@ -47,10 +87,14 @@ public class Hospital {
         System.out.printf("Fallecido:      %.1f%%%n", (fallecido     * 100.0) / total);
     }
 
+    // ══════════════════════════════════════════
+    //  MAIN - Prueba del sistema
+    // ══════════════════════════════════════════
     public static void main(String[] args) {
+
         Hospital hospital = new Hospital("Hospital Universitario");
 
-        // --- 6 pacientes con diferente tipo de cáncer ---
+        // ── 6 pacientes con diferente tipo de cáncer ──
         Paciente p1 = new Paciente("P001", "Ana Gómez",    45, "F", "Leucemia", "II",  "En tratamiento");
         Paciente p2 = new Paciente("P002", "Carlos Ruiz",  60, "M", "Sarcoma",  "III", "Fallecido");
         Paciente p3 = new Paciente("P003", "María Torres", 38, "F", "Linfoma",  "I",   "En remisión");
@@ -65,17 +109,17 @@ public class Hospital {
         hospital.registrarPaciente(p5);
         hospital.registrarPaciente(p6);
 
-        // --- 2 exámenes a 3 pacientes (p1, p2, p3) ---
-        p1.agregarExamen(new Examen("E001", "2024-01-10", "Biopsia",     "Células malignas detectadas"));
-        p1.agregarExamen(new Examen("E002", "2024-02-15", "Tomografía",  "Masa reducida un 20%"));
+        // ── 2 exámenes a 3 pacientes ──
+        p1.agregarExamen(new Examen("E001", "2024-01-10", "Biopsia",    "Células malignas detectadas"));
+        p1.agregarExamen(new Examen("E002", "2024-02-15", "Tomografía", "Masa reducida un 20%"));
 
-        p2.agregarExamen(new Examen("E003", "2024-01-05", "Resonancia",  "Tumor en tejido blando"));
-        p2.agregarExamen(new Examen("E004", "2024-03-20", "Biopsia",     "Metástasis confirmada"));
+        p2.agregarExamen(new Examen("E003", "2024-01-05", "Resonancia", "Tumor en tejido blando"));
+        p2.agregarExamen(new Examen("E004", "2024-03-20", "Biopsia",    "Metástasis confirmada"));
 
-        p3.agregarExamen(new Examen("E005", "2024-02-01", "Tomografía",  "Sin evidencia de enfermedad"));
-        p3.agregarExamen(new Examen("E006", "2024-04-10", "Resonancia",  "Ganglios normales"));
+        p3.agregarExamen(new Examen("E005", "2024-02-01", "Tomografía", "Sin evidencia de enfermedad"));
+        p3.agregarExamen(new Examen("E006", "2024-04-10", "Resonancia", "Ganglios normales"));
 
-        // --- 2 tratamientos a 3 pacientes (p4, p5, p6) ---
+        // ── 2 tratamientos a 3 pacientes ──
         p4.agregarTratamiento(new Tratamiento("T001", "Quimioterapia", 180, "Náuseas, fatiga"));
         p4.agregarTratamiento(new Tratamiento("T002", "Inmunoterapia",  90, "Fiebre leve"));
 
@@ -85,14 +129,25 @@ public class Hospital {
         p6.agregarTratamiento(new Tratamiento("T005", "Quimioterapia", 120, "Pérdida de cabello"));
         p6.agregarTratamiento(new Tratamiento("T006", "Radioterapia",   60, "Cansancio extremo"));
 
-        // --- Estadísticas ---
+        // ── Estadísticas ──
         hospital.pacientesPorTipoCancer();
         hospital.porcentajePorEstado();
 
-        // --- Mostrar eficacia de un tratamiento como ejemplo ---
-        System.out.println("\n=== Ejemplo eficacia de tratamiento ===");
-        Tratamiento t = p4.getTratamientos().get(0);
-        System.out.printf("Tratamiento '%s' para %s → eficacia estimada: %.1f%%%n",
-            t.getNombre(), p4.getTipoCancer(), t.calcularEficacia(p4.getTipoCancer()));
+        // ── Prueba buscarPaciente ──
+        System.out.println("\n=== Búsqueda de paciente ===");
+        Paciente encontrado = hospital.buscarPaciente("P004");
+        if (encontrado != null) {
+            System.out.println("Paciente encontrado: " + encontrado);
+        }
+
+        // ── Prueba buscarPaciente no existente ──
+        hospital.buscarPaciente("P999");
+
+        // ── Ejemplo de eficacia de tratamiento ──
+        System.out.println("\n=== Eficacia de tratamientos de " + p4.getNombre() + " ===");
+        for (Tratamiento t : p4.getTratamientos()) {
+            System.out.printf("  %s → %.1f%% de eficacia para %s%n",
+                t.getNombre(), t.calcularEficacia(p4.getTipoCancer()), p4.getTipoCancer());
+        }
     }
 }
