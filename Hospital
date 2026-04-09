@@ -12,8 +12,7 @@ public class Hospital {
     private List<Paciente> pacientes;
 
     /**
-     * Crea el hospital con su nombre y una lista de pacientes vacía.
-     * @param nombre Nombre del hospital universitario
+     * Crea el hospital y una lista de pacientes vacía.
      */
     public Hospital(String nombre) {
         this.nombre    = nombre;
