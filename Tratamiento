@@ -10,13 +10,8 @@ public class Tratamiento {
     private int    duracionDias;
     private String efectosSecundarios;
 
-    /**
-     * Crea un nuevo tratamiento con todos sus datos.
-     * @param idTratamiento      Identificador único del tratamiento
-     * @param nombre             Nombre del tratamiento (ej: Quimioterapia)
-     * @param duracionDias       Duración estimada en días
-     * @param efectosSecundarios Descripción de los efectos secundarios conocidos
-     */
+    //Constructor
+
     public Tratamiento(String idTratamiento, String nombre,
                        int duracionDias, String efectosSecundarios) {
         this.idTratamiento      = idTratamiento;
@@ -28,8 +23,6 @@ public class Tratamiento {
     /**
      * Calcula el porcentaje estimado de eficacia del tratamiento
      * según el tipo de cáncer del paciente.
-     *
-     * Lógica:
      *  - Leucemia  → responde mejor a Quimioterapia e Inmunoterapia (base 70%)
      *  - Linfoma   → responde bien a Radioterapia (base 65%)
      *  - Sarcoma   → responde mejor a Cirugía (base 60%)
